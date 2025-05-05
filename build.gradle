@@ -1,77 +1,78 @@
 buildscript {
-	repositories {
-		jcenter()
-		mavenCentral()
-		maven {
-			name 'JitPack'
-			url 'https://jitpack.io'
-		}
-	}
-	dependencies {
-		classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
-		classpath 'com.github.IntellectualSites.FastAsyncWorldEdit:ap:1.16-462'
-	}
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'JitPack'
+            url = 'https://jitpack.io'
+        }
+    }
+    dependencies {
+        classpath 'com.fastasyncworldedit:FastAsyncWorldEdit-Libs-Ap:2.11.0'
+    }
 }
 
 plugins {
-    id("maven-publish")
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'maven-publish'
 }
 
-apply plugin: 'java-library'
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
-
-compileJava   {
-	sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
+def targetJavaVersion = 21
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
 }
+
+group = 'eu.mikart.worldedit'
+version = '1.0.0-SNAPSHOT'
 
 repositories {
-	mavenCentral()
-	maven { url 'https://repo.spongepowered.org/maven' }
-	maven { url 'https://jitpack.io' }
-	maven { url = "https://maven.enginehub.org/repo/" }
-
-
-	//maven { url 'https://nexus.byteandbit.cloud/repository/maven-releases/' }
-	maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
-	/*maven {
-		name = "byteandbit"
-		url = uri("https://nexus.byteandbit.cloud/repository/maven-private/")
-		credentials(PasswordCredentials)
-		authentication {
-			basic(BasicAuthentication)
-		}
-	}*/
+    mavenCentral()
+    maven { url = 'https://repo.spongepowered.org/maven' }
+    maven { url = 'https://jitpack.io' }
+    maven { url = 'https://maven.enginehub.org/repo/' }
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
 }
-
-
-
-def jarFile = layout.buildDirectory.file('libs/World-Edit.jar')
-def jarArtifact = artifacts.add('archives', jarFile.get().asFile) {
-    type 'jar'
-    builtBy 'jar'
-}
-
-
 
 dependencies {
-	compileOnly 'com.github.Minestom:Minestom:3ca74e00fa'
-	//compileOnly("net.pixelravens:PixelLib:b114")
-	compileOnly('com.google.guava:guava:31.1-jre')
-	compileOnly("com.sk89q.worldedit:worldedit-core:7.2.12")
-	compileOnly('org.spongepowered:configurate-yaml:4.1.2');
-	compileOnly 'com.github.HypeJet:HypeStom-Kt:7f6eaccd14'
+    compileOnly 'net.minestom:minestom-snapshots:1_21_5-2398778b46'
+    compileOnly 'com.google.guava:guava:33.3.1-jre'
+    implementation 'com.sk89q.worldedit:worldedit-core:7.3.11-SNAPSHOT'
+    implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Libs-Ap:2.11.0'
+    compileOnly 'org.spongepowered:configurate-yaml:4.1.2'
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
-shadowJar {
+tasks.named('build').configure {
+    dependsOn tasks.named('shadowJar')
 }
 
-build.dependsOn shadowJar
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
 
-compileJava.options.encoding = 'UTF-8'
+            groupId = 'eu.mikart.worldedit'
+            artifactId = 'worldedit-minestom'
+            version = project.version
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+            pom {
+                name = 'WorldEdit Minestom'
+                description = 'WorldEdit implementation for Minestom'
+                url = 'https://github.com/ArikSquad/worldedit-minestom'
+
+                licenses {
+                    license {
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
 }

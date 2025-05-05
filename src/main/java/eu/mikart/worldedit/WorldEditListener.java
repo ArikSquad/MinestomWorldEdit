@@ -1,13 +1,13 @@
-package io.github.openminigameserver.worldedit;
+package eu.mikart.worldedit;
 
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.util.Direction;
 import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldedit.world.World;
-import io.github.openminigameserver.worldedit.platform.MinestomPlatform;
-import io.github.openminigameserver.worldedit.platform.actors.MinestomPlayer;
-import io.github.openminigameserver.worldedit.platform.adapters.MinestomAdapter;
+import eu.mikart.worldedit.platform.MinestomPlatform;
+import eu.mikart.worldedit.platform.actors.MinestomPlayer;
+import eu.mikart.worldedit.platform.adapters.MinestomAdapter;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.player.*;
