@@ -137,6 +137,11 @@ public final class MinestomWorld extends AbstractWorld {
     }
 
     @NotNull
+    public String id() {
+        return this.getWorld().getDimensionType().name();
+    }
+
+    @NotNull
     public Set<SideEffect> applySideEffects(@Nullable BlockVector3 position, @Nullable BlockState previousType, @Nullable SideEffectSet sideEffectSet) {
         return new LinkedHashSet<>();
     }
