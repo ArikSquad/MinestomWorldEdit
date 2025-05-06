@@ -73,6 +73,13 @@ publishing {
         }
     }
     repositories {
-        mavenLocal()
+        maven {
+            name = 'mikart'
+            url = uri('https://maven.mikart.eu/snapshots')
+            credentials {
+                username = System.getenv('MIKART_MAVEN_USER')
+                password = System.getenv('MIKART_MAVEN_PASSWORD')
+            }
+        }
     }
 }
