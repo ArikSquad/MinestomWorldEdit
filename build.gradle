@@ -23,7 +23,7 @@ java {
 }
 
 group = 'eu.mikart.worldedit'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -35,7 +35,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'net.minestom:minestom-snapshots:1_21_5-2398778b46'
+    compileOnly 'net.minestom:minestom-snapshots:f9506f6821'
     compileOnly 'com.google.guava:guava:33.3.1-jre'
     implementation 'com.sk89q.worldedit:worldedit-core:7.3.11-SNAPSHOT'
     implementation 'com.fastasyncworldedit:FastAsyncWorldEdit-Libs-Ap:2.11.0'
